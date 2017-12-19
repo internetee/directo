@@ -1,8 +1,12 @@
 require 'money'
+require 'nokogiri'
 require 'directo/version'
 require 'directo/configuration'
+require 'directo/customer'
 require 'directo/invoice'
-require 'directo/invoice/item'
+require 'directo/invoice/line'
+require 'directo/serializer'
+require 'directo/money'
 
 module Directo
   class << self
