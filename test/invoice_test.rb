@@ -55,11 +55,5 @@ module Directo
       @invoice.vat_amount = Money.from_amount(1)
       assert_equal Money.from_amount(1), @invoice.vat_amount
     end
-
-    def test_adds_line
-      line = Invoice::Line.new
-      @invoice.add_line(line)
-      assert_includes @invoice.lines, line
-    end
   end
 end

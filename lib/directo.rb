@@ -5,6 +5,7 @@ require 'directo/configuration'
 require 'directo/customer'
 require 'directo/invoice'
 require 'directo/invoice/line'
+require 'directo/invoice/lines'
 require 'directo/serializer'
 require 'directo/money'
 
