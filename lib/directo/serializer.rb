@@ -8,9 +8,9 @@ module Directo
       builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
         xml.invoices {
           @invoices.each do |invoice|
-            xml.invoice(serializable_invoice_hash(invoice)) {
+            xml.invoice(invoice_to_hash(invoice)) {
               invoice.each do |line|
-                xml.line serializable_line_hash(line)
+                xml.line line_to_hash(line)
               end
             }
           end
@@ -22,7 +22,7 @@ module Directo
 
     private
 
-    def serializable_invoice_hash(invoice)
+    def invoice_to_hash(invoice)
       { Number: invoice.number,
         InvoiceDate: invoice.date,
         PaymentTerm: invoice.payment_terms,
@@ -33,7 +33,7 @@ module Directo
         TotalVAT: invoice.vat_amount }
     end
 
-    def serializable_line_hash(line)
+    def line_to_hash(line)
       hash = { RN: line.seq_no,
                RR: line.link_id,
                ProductID: line.code,
