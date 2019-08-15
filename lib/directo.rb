@@ -1,3 +1,5 @@
+require 'forwardable'
+
 require 'money'
 require 'nokogiri'
 require 'directo/version'
