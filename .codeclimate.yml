@@ -1,0 +1,17 @@
+version: "2"
+prepare:
+  fetch:
+    - "https://raw.githubusercontent.com/internetee/style-guide/master/.rubocop-ruby.yml"
+    - url: "https://raw.githubusercontent.com/internetee/style-guide/master/.rubocop-rails.yml"
+      path: ".rubocop.yml"
+plugins:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - ruby
+  rubocop:
+    enabled: true
+    channel: rubocop-0-74
+exclude_patterns:
+  - "bin/"
