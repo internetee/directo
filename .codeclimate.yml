@@ -2,7 +2,7 @@ version: "2"
 prepare:
   fetch:
     - "https://raw.githubusercontent.com/internetee/style-guide/master/.rubocop-ruby.yml"
-      path: ".rubocop.yml"
+    path: ".rubocop.yml"
 plugins:
   duplication:
     enabled: true
