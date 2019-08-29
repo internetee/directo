@@ -1,0 +1,59 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:sql="urn:schemas-microsoft-com:mapping-schema">
+  <xsd:annotation>
+    <xsd:appinfo>
+      <sql:relationship name="REL" parent="in_mr_arved" parent-key="number" child="in_mr_arved_read" child-key="number" />
+    </xsd:appinfo>
+  </xsd:annotation>
+  <xsd:element name="invoices" sql:is-constant="true">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="invoice" sql:relation="in_mr_arved">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:sequence>
+                <xsd:element ref="line" sql:relationship="REL" />
+              </xsd:sequence>
+            </xsd:sequence>
+            <xsd:attribute name="Number" sql:field="number" type="xsd:string" />
+            <!-- Unikaalsuse kontrolli väli, integer -->
+            <!-- xsd:string -->
+            <xsd:attribute name="InvoiceDate" sql:field="aeg" sql:datatype="dateTime" type="xsd:date" />
+            <xsd:attribute name="PaymentTerm" sql:field="tingimus" type="xsd:string" />
+            <!-- Tasumistingimuse KOOD Directos -->
+            <xsd:attribute name="CustomerCode" sql:field="klient_kood" type="xsd:string" />
+			      <xsd:attribute name="OrdererCode" sql:field="klient_tellija" type="xsd:string" />
+			      <xsd:attribute name="CustomerName" sql:field="klient_nimi" type="xsd:string"/>
+            <xsd:attribute name="Street" sql:field="aadress1" type="xsd:string" />
+            <xsd:attribute name="CityAndZip" sql:field="aadress2" type="xsd:string" />
+            <xsd:attribute name="Country" sql:field="aadress3" type="xsd:string" />
+            <xsd:attribute name="TotalWoVAT" sql:field="summa" type="xsd:decimal" />
+            <xsd:attribute name="TotalVAT" sql:field="kmkokku" type="xsd:decimal" />
+			      <xsd:attribute name="Currency" sql:field="valuuta" type="xsd:string" />
+            <xsd:attribute name="Language" sql:field="keel" type="xsd:string" />
+            <xsd:attribute name="InvoiceComment" sql:field="sisekommentaar" type="xsd:string" />
+			      <xsd:attribute name="Comment" sql:field="kommentaar" type="xsd:string" />
+			      <xsd:attribute name="SalesAgent" sql:field="myyja" type="xsd:string" />        <!--  Müügiagent -->
+
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="line" sql:relation="in_mr_arved_read">
+    <xsd:complexType>
+      <xsd:attribute name="ProductID" sql:field="artikkel" type="xsd:string" />
+      <xsd:attribute name="Quantity" sql:field="kogus" type="xsd:decimal" />
+      <xsd:attribute name="Unit" sql:field="yhik" type="xsd:string" />
+      <xsd:attribute name="UnitPriceWoVAT" sql:field="yhikuhind" type="xsd:decimal" />
+		  <xsd:attribute name="Discount" sql:field="pross" type="xsd:decimal" />
+		  <xsd:attribute name="LineTotalWoVAT" sql:field="summa" type="xsd:decimal" /><!-- rea summa käibemaksuta -->
+      <xsd:attribute name="ProductName" sql:field="nimetus" type="xsd:string" />
+      <xsd:attribute name="AccountCode" sql:field="konto" type="xsd:string" /><!-- raamatupidamislik konteering -->
+      <xsd:attribute name="VATCode" sql:field="kmkood" type="xsd:integer" /><!-- Directo KM kood. Täitmine kohustuslik, täitmata jätmisel rakendatakse 0-määra -->
+      <xsd:attribute name="StartDate" sql:field="r_aeg1"  sql:datatype="dateTime" type="xsd:date" />
+      <xsd:attribute name="EndDate" sql:field="r_aeg2"  sql:datatype="dateTime" type="xsd:date" />
+      <xsd:attribute name="RN" sql:field="rn" type="xsd:int" />
+      <xsd:attribute name="RR" sql:field="rv" type="xsd:int" />
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>
