@@ -8,18 +8,12 @@ module Directo
       end
 
       request_body = URI.encode_www_form(put: 1, what: 'invoice', xmldata: 'test')
-      response_body = <<-XML
-        <?xml version="1.0" encoding="UTF-8"?>
-        <results>
-          <Result Type="0" Desc="OK" docid="123" doctype="INVOICE" submit="Invoices" />
-        </results>
-      XML
-      stub_request(:post, 'http://directo-api.test').to_return(status: 200, body: response_body)
+      request_stub = stub_request(:post, 'http://directo-api.test').with(body: request_body)
 
       invoices = Invoices.new([])
       invoices.deliver
 
-      assert_requested :post, 'http://directo-api.test', body: request_body
+      assert_requested request_stub
     end
   end
 end
