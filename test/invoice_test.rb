@@ -25,22 +25,6 @@ module Directo
       end
     end
 
-    def test_configures_payment_terms
-      Directo.configure do |config|
-        config.payment_terms = 'net10'
-      end
-
-      assert_equal 'net10', @invoice.payment_terms
-    end
-
-    def test_configures_sales_agent
-      Directo.configure do |config|
-        config.sales_agent = 'John Doe'
-      end
-
-      assert_equal 'John Doe', @invoice.sales_agent
-    end
-
     def test_currency
       @invoice.currency = Money::Currency.new('EUR')
       assert_equal Money::Currency.new('EUR'), @invoice.currency

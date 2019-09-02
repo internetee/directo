@@ -17,13 +17,5 @@ module Directo
       @lines = []
       yield self if block_given?
     end
-
-    def payment_terms
-      Directo.configuration.payment_terms
-    end
-
-    def sales_agent
-      Directo.configuration.sales_agent
-    end
   end
 end
