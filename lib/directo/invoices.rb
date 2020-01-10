@@ -25,7 +25,9 @@ module Directo
 
     def deliver
       uri = URI(@api_url)
-      Net::HTTP.post_form(uri, put: 1, what: 'invoice', xmldata: 'test')
+      serializer = Serializer.new(@invoices)
+      xmldata = serializer.serialize.gsub("\n", '')
+      Net::HTTP.post_form(uri, put: '1', what: 'invoice', xmldata: xmldata)
     end
   end
 end
