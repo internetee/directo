@@ -1,14 +1,17 @@
 module Directo
   class Invoice
     class Line
-      attr_accessor :seq_no
-      attr_accessor :code
-      attr_accessor :description
-      attr_accessor :period
-      attr_accessor :vat_number
-      attr_accessor :quantity
-      attr_accessor :unit
-      attr_accessor :price
+      attr_accessor :seq_no # RN
+      attr_accessor :code # ProductID
+      attr_accessor :description # ProductName
+
+      # Date.parse('2010-07-05')..Date.parse('2010-07-06')
+      attr_accessor :period # StartDate  / EndDate
+
+      attr_accessor :vat_number # VATCode
+      attr_accessor :quantity # Quantity
+      attr_accessor :unit # Unit
+      attr_accessor :price # UnitPriceWoVAT
 
       def initialize
         yield self if block_given?
@@ -20,6 +23,7 @@ module Directo
 
       def link_id
         return seq_no unless has_parent?
+
         @parent.seq_no
       end
 

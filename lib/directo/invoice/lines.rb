@@ -3,12 +3,20 @@ module Directo
     class Lines
       attr_reader :lines
 
-      def initialize(lines)
+      def initialize(lines = [])
         @lines = populate_with_seq_no(lines)
       end
 
       def each(&block)
         lines.each(&block)
+      end
+
+      def new
+        Invoice::Line.new
+      end
+
+      def add(line)
+        @lines.push(line)
       end
 
       private

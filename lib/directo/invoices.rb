@@ -1,11 +1,30 @@
 module Directo
   class Invoices
-    def initialize(invoices)
+    extend Forwardable
+
+    def_delegator :@invoices, :each
+
+    def initialize(invoices = [], api_url = nil, sales_agent = nil, payment_terms = nil)
       @invoices = invoices
+      @api_url = api_url
+      @payment_terms = payment_terms
+      @sales_agent = sales_agent
+    end
+
+    def each(&block)
+      @invoices.each(&block)
+    end
+
+    def new
+      Invoice.new(nil, @sales_agent, @payment_terms)
+    end
+
+    def add(invoice)
+      @invoices.push(invoice)
     end
 
     def deliver
-      uri = URI(Directo.configuration.endpoint)
+      uri = URI(@api_url)
       Net::HTTP.post_form(uri, put: 1, what: 'invoice', xmldata: 'test')
     end
   end

@@ -9,7 +9,7 @@ module Directo
         xml.invoices {
           @invoices.each do |invoice|
             xml.invoice(invoice_to_hash(invoice)) {
-              invoice.each do |line|
+              invoice.lines.each do |line|
                 xml.line line_to_hash(line)
               end
             }
