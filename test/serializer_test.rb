@@ -6,6 +6,7 @@ module Directo
 
       customer = Customer.new
       customer.code = 'CUST1'
+      customer.name = 'CUSTOMER NAME'
 
       client = Client.new(nil, 'John Doe', 'net10')
 

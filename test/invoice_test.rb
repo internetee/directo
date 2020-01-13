@@ -21,7 +21,16 @@ module Directo
       @invoice.customer = customer
 
       customer.stub(:code, 'CUST001') do
-        assert_equal 'CUST001', @invoice.code
+        assert_equal 'CUST001', @invoice.customer_code
+      end
+    end
+
+    def test_delegates_name_to_customer
+      customer = Customer.new
+      @invoice.customer = customer
+
+      customer.stub(:name, 'CUSTOMER NAME') do
+        assert_equal 'CUSTOMER NAME', @invoice.customer_name
       end
     end
 

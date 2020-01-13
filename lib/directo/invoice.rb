@@ -14,7 +14,8 @@ module Directo
     # PaymentTerm: invoice.payment_terms
     # SalesAgent: invoice.sales_agent
 
-    def_delegator :@customer, :code
+    def_delegator :@customer, :code, :customer_code
+    def_delegator :@customer, :name, :customer_name
     def_delegator :@lines, :each
 
     def initialize(_lines = nil, sales_agent = nil, payment_terms = nil)
