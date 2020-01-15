@@ -7,7 +7,8 @@ module Directo
     attr_accessor :date # InvoiceDate
     attr_accessor :currency # Currency
     attr_accessor :language # Language
-    attr_accessor :vat_amount # TotalVAT
+    attr_accessor :total_wo_vat # TotalWoVAT
+    attr_accessor :vat_amount # TotalVAT, VAT percentage
     attr_accessor :lines
     attr_accessor :payment_terms
     attr_accessor :sales_agent

@@ -23,11 +23,22 @@ module Directo
       @invoices.push(invoice)
     end
 
-    def deliver
+    def deliver(ssl_verify: true)
       uri = URI(@api_url)
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == 'https'
+      http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless ssl_verify
+
+      req = Net::HTTP::Post.new(uri)
+      req.set_form_data(put: 1, what: 'invoice', xmldata: as_xml)
+
+      http.request(req)
+    end
+
+    def as_xml
       serializer = Serializer.new(@invoices)
-      xmldata = serializer.serialize.gsub("\n", '')
-      Net::HTTP.post_form(uri, put: '1', what: 'invoice', xmldata: xmldata)
+      serializer.serialize.gsub("\n", '')
     end
   end
 end

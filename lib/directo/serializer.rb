@@ -31,7 +31,9 @@ module Directo
         Language: invoice.language,
         Currency: invoice.currency,
         SalesAgent: invoice.sales_agent,
-        TotalVAT: invoice.vat_amount }
+        TotalVAT: invoice.vat_amount,
+        TotalWoVAT: invoice.total_wo_vat
+      }
     end
 
     def line_to_hash(line)

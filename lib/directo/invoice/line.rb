@@ -8,7 +8,7 @@ module Directo
       # Date.parse('2010-07-05')..Date.parse('2010-07-06')
       attr_accessor :period # StartDate  / EndDate
 
-      attr_accessor :vat_number # VATCode
+      attr_accessor :vat_number # VATCode, percentage
       attr_accessor :quantity # Quantity
       attr_accessor :unit # Unit
       attr_accessor :price # UnitPriceWoVAT
