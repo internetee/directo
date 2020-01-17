@@ -16,8 +16,8 @@ module Directo
       end
 
       def add(line)
-        @lines.push(line)
-        @lines = populate_with_seq_no(@lines)
+        lines.push(line)
+        @lines = populate_with_seq_no(lines)
       end
 
       private

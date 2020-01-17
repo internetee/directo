@@ -28,6 +28,7 @@ module Directo
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
+      http.read_timeout = 10
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless ssl_verify
 
       req = Net::HTTP::Post.new(uri)

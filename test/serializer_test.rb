@@ -18,7 +18,8 @@ module Directo
       inv.date = Date.parse('2010-07-05')
       inv.currency = Money::Currency.new('EUR')
       inv.language = 'ENG'
-      inv.vat_amount = Money.from_amount(1)
+      inv.vat_amount = Money.from_amount(2)
+      inv.total_wo_vat = Money.from_amount(10)
 
       parent_line = Invoice::Line.new do |line|
         line.code = 'CODE1'
@@ -39,8 +40,8 @@ module Directo
 
       xml = <<-XML
         <invoices>
-          <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="CUST1" Language="ENG"
-            Currency="EUR" SalesAgent="John Doe" TotalVAT="1.00">
+          <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="CUST1" CustomerName="CUSTOMER NAME" Language="ENG"
+            Currency="EUR" SalesAgent="John Doe" TotalVAT="2.00" TotalWoVAT="10.00">
             <line RN="1" RR="1" ProductID="CODE1" Quantity="2" Unit="pc" ProductName="Acme services"
             UnitPriceWoVAT="1.00" VATCode="US1" />
             <line RN="2" RR="1" ProductID="CODE1" Quantity="2" Unit="pc" ProductName="Acme services"
