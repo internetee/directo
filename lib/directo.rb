@@ -11,6 +11,8 @@ require 'directo/invoice/lines'
 require 'directo/invoices'
 require 'directo/serializer'
 require 'directo/money'
-
-module Directo
+require 'directo/schema'
+require 'directo/schemas/prepayment'
+require 'directo/schemas/summary'
+module DirectoApi
 end

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Directo
+module DirectoApi
   class InvoiceTest < Minitest::Test
     def setup
       @invoice = Invoice.new

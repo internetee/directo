@@ -7,13 +7,13 @@
 # Usage
 Start by initializing Directo client by
 ```
-@client = Directo::Client.new(api_url, sales_agent, payment_terms)
+@client = DirectoApi::Client.new(api_url, sales_agent, payment_terms)
 ```
 
 Invoice example
 ```
 inv = @client.invoices.new
-cust = Directo::Customer.new
+cust = DirectoApi::Customer.new
 cust.code = 'CUST1'
 ...
 

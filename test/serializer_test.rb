@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Directo
+module DirectoApi
   class SerializerTest < Minitest::Test
     def test_serialize
 

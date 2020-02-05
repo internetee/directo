@@ -1,4 +1,4 @@
-module Directo
+module DirectoApi
   class Invoice
     class Line
       attr_accessor :seq_no # RN

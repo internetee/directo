@@ -1,4 +1,4 @@
-module Directo
+module DirectoApi
   class Invoices
     extend Forwardable
 
@@ -15,8 +15,18 @@ module Directo
       @invoices.each(&block)
     end
 
-    def new
-      Invoice.new(nil, @sales_agent, @payment_terms)
+    def new(schema: nil)
+      if schema
+        Invoice.new_from_schema(nil, @sales_agent, @payment_terms)
+      else
+        Invoice.new(nil, @sales_agent, @payment_terms)
+      end
+    end
+
+    def add_with_schema(schema:, invoice:)
+      inv = Invoice.new(nil, @sales_agent, @payment_terms)
+      inv.load_from_schema(schema: schema, invoice: invoice)
+      add(inv)
     end
 
     def add(invoice)

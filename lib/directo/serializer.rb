@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Directo
+module DirectoApi
   class Serializer
     def initialize(invoices)
       @invoices = invoices

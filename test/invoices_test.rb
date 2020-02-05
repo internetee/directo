@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Directo
+module DirectoApi
   class InvoicesTest < Minitest::Test
     def test_delivers_to_api_url
       WebMock::Config.instance.query_values_notation = :flat_array

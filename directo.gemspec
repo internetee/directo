@@ -4,7 +4,7 @@ require 'directo/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'directo'
-  spec.version = Directo::VERSION
+  spec.version = DirectoApi::VERSION
   spec.author = 'Estonian Internet Foundation'
   spec.email = 'info@internet.ee'
   spec.summary = spec.description
