@@ -41,20 +41,33 @@ module DirectoApi
         next unless invoice.key? meta_map[key]
 
         send((key.to_s + '='), invoice[meta_map[key]])
-        puts "Found value for meta key #{key}: #{invoice[meta_map[key]]}"
       end
 
       @customer = Customer.new(name: '', code: @customer)
-      invoice['invoice_lines'].each do |invoice_line|
+
+      invoice_lines = remove_line_duplicates(invoice['invoice_lines'])
+      invoice_lines.each do |invoice_line|
         line = @lines.new
         line_map.keys.each do |key|
           next unless invoice_line.key? line_map[key]
 
           line.send((key.to_s + '='), invoice_line[line_map[key]])
-          puts "Found value for line key #{key}: #{invoice_line[line_map[key]]}"
         end
         @lines.add(line)
       end
+    end
+
+    def remove_line_duplicates(invoice_lines)
+      line_map = Hash.new 0
+      invoice_lines.each { |l| line_map[l] += 1 }
+
+      lines = []
+      line_map.keys.each do |count|
+        count['quantity'] = line_map[count]
+        lines << count
+      end
+
+      lines
     end
   end
 end

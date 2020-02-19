@@ -4,7 +4,6 @@ module DirectoApi
       {
         'customer': 'customer_code',
         'date': 'date',
-        # 'transaction_date': 'transaction_date',
         'number': 'number',
         'currency': 'currency',
         'language': 'language'
@@ -16,7 +15,9 @@ module DirectoApi
         'code': 'product_id',
         'description': 'description',
         'quantity': 'quantity',
-        'price': 'price'
+        'price': 'price',
+        'period': 'period',
+        'unit': 'unit'
       }
     end
   end

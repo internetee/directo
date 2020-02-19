@@ -23,6 +23,10 @@ module DirectoApi
       end
     end
 
+    def count
+      @invoices.count
+    end
+
     def add_with_schema(schema:, invoice:)
       inv = Invoice.new(nil, @sales_agent, @payment_terms)
       inv.load_from_schema(schema: schema, invoice: invoice)
