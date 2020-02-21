@@ -53,6 +53,10 @@ module DirectoApi
 
           line.send((key.to_s + '='), invoice_line[line_map[key]])
         end
+        if line.start_date.present?
+          parent = @lines.each.find_all { |l| l.description == line.description }.first
+          line.parent = parent if parent
+        end
         @lines.add(line)
       end
     end
@@ -63,7 +67,7 @@ module DirectoApi
 
       lines = []
       line_map.keys.each do |count|
-        count['quantity'] = line_map[count]
+        count['quantity'] = line_map[count] if count['unit'].present?
         lines << count
       end
 

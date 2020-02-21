@@ -51,12 +51,12 @@ module DirectoApi
                UnitPriceWoVAT: line.price,
                VATCode: line.vat_number }
 
-      if line.period
-        hash[:StartDate] = line.period.begin
-        hash[:EndDate] = line.period.end
+      if line.start_date && line.end_date
+        hash[:StartDate] = line.start_date
+        hash[:EndDate] = line.end_date
       end
 
-      hash
+      hash.select { |_key, value| value.present? }
     end
   end
 end

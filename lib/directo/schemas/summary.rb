@@ -17,7 +17,9 @@ module DirectoApi
         'quantity': 'quantity',
         'price': 'price',
         'period': 'period',
-        'unit': 'unit'
+        'unit': 'unit',
+        'start_date': 'start_date',
+        'end_date': 'end_date'
       }
     end
   end
