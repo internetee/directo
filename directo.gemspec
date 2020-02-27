@@ -14,8 +14,8 @@ Gem::Specification.new do |spec|
   spec.files = %w[LICENSE.md README.md directo.gemspec] + Dir['lib/**/*.rb']
   spec.require_paths = %w[lib]
 
-  spec.add_runtime_dependency 'nokogiri', '~> 1.8'
-  spec.add_runtime_dependency 'money', '~> 6.7'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.10'
+  spec.add_runtime_dependency 'money', '~> 6.13'
 
   spec.add_development_dependency 'bundler', "~> 2.0"
   spec.add_development_dependency 'rake', '~> 10.0'

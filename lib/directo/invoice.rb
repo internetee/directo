@@ -5,16 +5,23 @@ module Directo
     attr_accessor :customer
     attr_accessor :number
     attr_accessor :date
+    attr_accessor :transaction_date
     attr_accessor :currency
     attr_accessor :language
+    attr_accessor :total_wo_vat
     attr_accessor :vat_amount
-    attr_writer :lines
+    attr_accessor :lines
+    attr_accessor :payment_terms
+    attr_accessor :sales_agent
 
-    def_delegator :@customer, :code
+    def_delegator :@customer, :code, :customer_code
+    def_delegator :@customer, :name, :customer_name
     def_delegator :@lines, :each
 
-    def initialize
-      @lines = []
+    def initialize(_lines = nil, sales_agent = nil, payment_terms = nil)
+      @sales_agent = sales_agent
+      @payment_terms = payment_terms
+      @lines ||= Invoice::Lines.new
       yield self if block_given?
     end
   end

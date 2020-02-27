@@ -3,22 +3,23 @@ require 'test_helper'
 module Directo
   class SerializerTest < Minitest::Test
     def test_serialize
-      Directo.configure do |config|
-        config.sales_agent = 'John Doe'
-        config.payment_terms = 'net10'
-      end
 
       customer = Customer.new
       customer.code = 'CUST1'
+      customer.name = 'CUSTOMER NAME'
 
-      invoice = Invoice.new do |invoice|
-        invoice.customer = customer
-        invoice.number = 1
-        invoice.date = Date.parse('2010-07-05')
-        invoice.currency = Money::Currency.new('EUR')
-        invoice.language = 'ENG'
-        invoice.vat_amount = Money.from_amount(1)
-      end
+      client = Client.new(nil, 'John Doe', 'net10')
+
+      invoices = client.invoices
+
+      inv = client.invoices.new
+      inv.customer = customer
+      inv.number = 1
+      inv.date = Date.parse('2010-07-05')
+      inv.currency = Money::Currency.new('EUR')
+      inv.language = 'ENG'
+      inv.vat_amount = Money.from_amount(2)
+      inv.total_wo_vat = Money.from_amount(10)
 
       parent_line = Invoice::Line.new do |line|
         line.code = 'CODE1'
@@ -33,16 +34,17 @@ module Directo
       child_line.period = Date.parse('2010-07-05')..Date.parse('2010-07-06')
       child_line.parent = parent_line
 
-      invoice.lines = Invoice::Lines.new([parent_line, child_line])
-      serializer = Serializer.new([invoice])
+      inv.lines = Invoice::Lines.new([parent_line, child_line])
+      client.invoices.add(inv)
+      serializer = Serializer.new(invoices)
 
       xml = <<-XML
         <invoices>
-          <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="CUST1" Language="ENG" 
-            Currency="EUR" SalesAgent="John Doe" TotalVAT="1.00">
-            <line RN="1" RR="1" ProductID="CODE1" Quantity="2" Unit="pc" ProductName="Acme services" 
+          <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="CUST1" CustomerName="CUSTOMER NAME" Language="ENG"
+            Currency="EUR" SalesAgent="John Doe" TotalVAT="2.00" TotalWoVAT="10.00">
+            <line RN="1" RR="1" ProductID="CODE1" Quantity="2" Unit="pc" ProductName="Acme services"
             UnitPriceWoVAT="1.00" VATCode="US1" />
-            <line RN="2" RR="1" ProductID="CODE1" Quantity="2" Unit="pc" ProductName="Acme services" 
+            <line RN="2" RR="1" ProductID="CODE1" Quantity="2" Unit="pc" ProductName="Acme services"
             UnitPriceWoVAT="1.00" VATCode="US1" StartDate="2010-07-05" EndDate="2010-07-06" />
           </invoice>
         </invoices>

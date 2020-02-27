@@ -3,6 +3,7 @@ require 'forwardable'
 require 'money'
 require 'nokogiri'
 require 'directo/version'
+require 'directo/client'
 require 'directo/customer'
 require 'directo/invoice'
 require 'directo/invoice/line'
@@ -12,7 +13,4 @@ require 'directo/serializer'
 require 'directo/money'
 
 module Directo
-  class << self
-    attr_accessor :api_url
-  end
 end

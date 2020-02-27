@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Directo
   class Serializer
     def initialize(invoices)
@@ -6,31 +8,37 @@ module Directo
 
     def serialize
       builder = Nokogiri::XML::Builder.new(encoding: 'UTF-8') do |xml|
-        xml.invoices {
+        xml.invoices do
           @invoices.each do |invoice|
-            xml.invoice(invoice_to_hash(invoice)) {
-              invoice.each do |line|
+            xml.invoice(invoice_to_hash(invoice)) do
+              invoice.lines.each do |line|
                 xml.line line_to_hash(line)
               end
-            }
+            end
           end
-        }
+        end
       end
-
       builder.to_xml
     end
 
     private
 
     def invoice_to_hash(invoice)
-      { Number: invoice.number,
-        InvoiceDate: invoice.date,
-        PaymentTerm: invoice.payment_terms,
-        CustomerCode: invoice.code,
-        Language: invoice.language,
-        Currency: invoice.currency,
-        SalesAgent: invoice.sales_agent,
-        TotalVAT: invoice.vat_amount }
+      hash = { Number: invoice.number,
+               InvoiceDate: invoice.date,
+               PaymentTerm: invoice.payment_terms,
+               CustomerCode: invoice.customer_code,
+               CustomerName: invoice.customer_name,
+               Language: invoice.language,
+               Currency: invoice.currency,
+               SalesAgent: invoice.sales_agent,
+               TotalVAT: invoice.vat_amount,
+               TotalWoVAT: invoice.total_wo_vat }
+      if invoice.transaction_date
+        hash[:TransactionDate] = invoice.transaction_date
+      end
+
+      hash
     end
 
     def line_to_hash(line)
