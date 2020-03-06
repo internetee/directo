@@ -14,5 +14,6 @@ require 'directo/money'
 require 'directo/schema'
 require 'directo/schemas/prepayment'
 require 'directo/schemas/summary'
+
 module DirectoApi
 end

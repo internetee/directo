@@ -31,7 +31,8 @@ module DirectoApi
       end
 
       child_line = parent_line.dup
-      child_line.period = Date.parse('2010-07-05')..Date.parse('2010-07-06')
+      child_line.start_date = Date.parse('2010-07-05')
+      child_line.end_date = Date.parse('2010-07-06')
       child_line.parent = parent_line
 
       inv.lines = Invoice::Lines.new([parent_line, child_line])

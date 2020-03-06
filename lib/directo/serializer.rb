@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module DirectoApi
   class Serializer
     def initialize(invoices)
@@ -38,7 +36,7 @@ module DirectoApi
         hash[:TransactionDate] = invoice.transaction_date
       end
 
-      hash
+      hash.reject { |k, v| ((k.to_s != 'Language') && v.to_s.empty?) }
     end
 
     def line_to_hash(line)
@@ -56,7 +54,7 @@ module DirectoApi
         hash[:EndDate] = line.end_date
       end
 
-      hash.select { |_key, value| value.present? }
+      hash.reject { |_k, v| v.to_s.empty? }
     end
   end
 end
