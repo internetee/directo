@@ -68,6 +68,10 @@ module DirectoApi
       lines = []
       line_map.keys.each do |count|
         count['quantity'] = line_map[count] unless count['unit'].nil?
+        if count['description'].match?(/Domeenide ettemaks|Domains prepayment/)
+          count['quantity'] = -1
+        end
+
         lines << count
       end
 
