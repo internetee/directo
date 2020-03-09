@@ -13,7 +13,6 @@ module DirectoApi
     attr_accessor :lines
     attr_accessor :payment_terms
     attr_accessor :sales_agent
-
     def_delegator :@customer, :code, :customer_code
     def_delegator :@customer, :name, :customer_name
     def_delegator :@lines, :each
@@ -33,6 +32,9 @@ module DirectoApi
       when 'summary'
         meta_map = Summary.meta_schema
         line_map = Summary.line_schema
+      when 'auction'
+        meta_map = Auction.meta_schema
+        line_map = Auction.line_schema
       else
         raise ArgumentError, 'Schema argument is not valid'
       end
@@ -42,8 +44,12 @@ module DirectoApi
 
         send((key.to_s + '='), invoice[meta_map[key]])
       end
-
-      @customer = Customer.new(name: '', code: @customer)
+      @customer = if invoice['customer'].class == Hash
+                    Customer.new(name: invoice['customer']['name'],
+                                 code: invoice['customer']['code'])
+                  else
+                    Customer.new(code: customer, name: nil)
+                  end
 
       invoice_lines = remove_line_duplicates(invoice['invoice_lines'])
       invoice_lines.each do |invoice_line|
