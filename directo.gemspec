@@ -1,4 +1,6 @@
-lib = File.expand_path('../lib', __FILE__)
+# frozen_string_literal: true
+
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'directo/version'
 
@@ -14,14 +16,14 @@ Gem::Specification.new do |spec|
   spec.files = %w[LICENSE.md README.md directo.gemspec] + Dir['lib/**/*.rb']
   spec.require_paths = %w[lib]
 
-  spec.add_runtime_dependency 'nokogiri', '~> 1.10'
   spec.add_runtime_dependency 'money', '~> 6.13'
+  spec.add_runtime_dependency 'nokogiri', '~> 1.10'
 
-  spec.add_development_dependency 'bundler', "~> 2.0"
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'minitest', '~> 5.0'
-  spec.add_development_dependency 'webmock'
+  spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'webmock'
 
-  spec.required_ruby_version = '>= 2.2.2'
+  spec.required_ruby_version = '>= 2.6'
 end
