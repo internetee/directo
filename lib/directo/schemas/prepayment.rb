@@ -7,7 +7,7 @@ module DirectoApi
         'transaction_date': 'transaction_date',
         'number': 'number',
         'currency': 'currency',
-        'language': 'language'
+        'language': 'language',
       }
     end
 
@@ -16,7 +16,7 @@ module DirectoApi
         'code': 'product_id',
         'description': 'description',
         'quantity': 'quantity',
-        'price': 'price'
+        'price': 'price',
       }
     end
   end

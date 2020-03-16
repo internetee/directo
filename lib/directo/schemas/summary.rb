@@ -6,7 +6,7 @@ module DirectoApi
         'date': 'date',
         'number': 'number',
         'currency': 'currency',
-        'language': 'language'
+        'language': 'language',
       }
     end
 
@@ -19,7 +19,7 @@ module DirectoApi
         'period': 'period',
         'unit': 'unit',
         'start_date': 'start_date',
-        'end_date': 'end_date'
+        'end_date': 'end_date',
       }
     end
   end

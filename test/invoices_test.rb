@@ -10,7 +10,7 @@ module DirectoApi
                              transaction_date: '2010-08-06', language: 'ENG', number: '1',
                              invoice_lines: [
                                { product_id: 'ETTEM06', description: 'Order nr. 1',
-                                 quantity: 1, price: '5.00' }
+                                 quantity: 1, price: '5.00' },
                              ] }.to_json)
 
       client.invoices.add_with_schema(schema: 'prepayment', invoice: invoice)
