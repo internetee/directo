@@ -34,6 +34,8 @@ module DirectoApi
       create_lines_from_schema(invoice_lines, line_map: schema.line_schema)
     end
 
+    private
+
     def schema_to_invoice(schema:, invoice:)
       schema.meta_schema.keys.each do |key|
         next unless invoice.key? schema.meta_schema[key]
