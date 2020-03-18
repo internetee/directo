@@ -1,4 +1,4 @@
-module Directo
+module DirectoApi
   class Invoice
     class Lines
       attr_reader :lines

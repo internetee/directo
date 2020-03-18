@@ -1,4 +1,4 @@
-module Directo
+module DirectoApi
   class Client
     attr_accessor :api_url, :sales_agent, :invoices, :payment_terms
 

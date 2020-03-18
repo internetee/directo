@@ -1,4 +1,4 @@
-module Directo
+module DirectoApi
   class Invoice
     class Line
       attr_accessor :seq_no # RN
@@ -7,6 +7,8 @@ module Directo
 
       # Date.parse('2010-07-05')..Date.parse('2010-07-06')
       attr_accessor :period # StartDate  / EndDate
+      attr_accessor :start_date
+      attr_accessor :end_date
 
       attr_accessor :vat_number # VATCode, percentage
       attr_accessor :quantity # Quantity

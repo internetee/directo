@@ -1,4 +1,4 @@
-module Directo
+module DirectoApi
   class Invoices
     extend Forwardable
 
@@ -15,8 +15,22 @@ module Directo
       @invoices.each(&block)
     end
 
-    def new
-      Invoice.new(nil, @sales_agent, @payment_terms)
+    def new(schema: nil)
+      if schema
+        Invoice.new_from_schema(nil, @sales_agent, @payment_terms)
+      else
+        Invoice.new(nil, @sales_agent, @payment_terms)
+      end
+    end
+
+    def count
+      @invoices.count
+    end
+
+    def add_with_schema(schema:, invoice:)
+      inv = Invoice.new(nil, @sales_agent, @payment_terms)
+      inv.load_from_schema(schema: schema, invoice: invoice)
+      add(inv)
     end
 
     def add(invoice)
@@ -28,7 +42,7 @@ module Directo
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
-      http.read_timeout = 10
+      http.read_timeout = 60
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE unless ssl_verify
 
       req = Net::HTTP::Post.new(uri)

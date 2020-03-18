@@ -1,6 +1,4 @@
-# frozen_string_literal: true
-
-module Directo
+module DirectoApi
   class Serializer
     def initialize(invoices)
       @invoices = invoices
@@ -24,39 +22,50 @@ module Directo
     private
 
     def invoice_to_hash(invoice)
-      hash = { Number: invoice.number,
-               InvoiceDate: invoice.date,
-               PaymentTerm: invoice.payment_terms,
-               CustomerCode: invoice.customer_code,
-               CustomerName: invoice.customer_name,
-               Language: invoice.language,
-               Currency: invoice.currency,
-               SalesAgent: invoice.sales_agent,
-               TotalVAT: invoice.vat_amount,
-               TotalWoVAT: invoice.total_wo_vat }
+      invoice_hash = compose_invoice_from_hash(invoice)
+
       if invoice.transaction_date
-        hash[:TransactionDate] = invoice.transaction_date
+        invoice_hash[:TransactionDate] = invoice.transaction_date
       end
 
-      hash
+      invoice_hash.reject { |k, v| ((k.to_s != 'Language') && v.to_s.empty?) }
+    end
+
+    def compose_invoice_from_hash(invoice)
+      { Number: invoice.number, InvoiceDate: invoice.date,
+        PaymentTerm: invoice.payment_terms,
+        CustomerCode: invoice.customer_code,
+        CustomerName: invoice.customer_name,
+        Language: invoice.language, Currency: invoice.currency,
+        SalesAgent: invoice.sales_agent,
+        TotalVAT: invoice.vat_amount,
+        TotalWoVAT: invoice.total_wo_vat }
+    end
+
+    def compose_line_from_hash(line)
+      { RN: line.seq_no,
+        RR: line.link_id,
+        ProductID: line.code,
+        Quantity: line.quantity,
+        Unit: line.unit,
+        ProductName: line.description,
+        UnitPriceWoVAT: line.price,
+        VATCode: line.vat_number }
     end
 
     def line_to_hash(line)
-      hash = { RN: line.seq_no,
-               RR: line.link_id,
-               ProductID: line.code,
-               Quantity: line.quantity,
-               Unit: line.unit,
-               ProductName: line.description,
-               UnitPriceWoVAT: line.price,
-               VATCode: line.vat_number }
+      line_hash = compose_line_from_hash(line)
 
-      if line.period
-        hash[:StartDate] = line.period.begin
-        hash[:EndDate] = line.period.end
-      end
+      attach_product_timeframe(line_hash, line)
 
-      hash
+      line_hash.reject { |_k, v| v.to_s.empty? }
+    end
+
+    def attach_product_timeframe(hash, line)
+      return unless line.start_date && line.end_date
+
+      hash[:StartDate] = line.start_date
+      hash[:EndDate] = line.end_date
     end
   end
 end

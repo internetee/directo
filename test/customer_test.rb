@@ -1,6 +1,6 @@
 require 'test_helper'
 
-module Directo
+module DirectoApi
   class CustomerTest < Minitest::Test
     def setup
       @customer = Customer.new
