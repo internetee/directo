@@ -37,7 +37,7 @@ module DirectoApi
     end
 
     def country_vat_code(iso_country)
-      vat_codes = File.read(File.join( File.dirname(__FILE__), 'data/vat.json'))
+      vat_codes = File.read(File.join(File.dirname(__FILE__), 'data/vat.json'))
       hash = JSON.parse(vat_codes)
       return 0 unless hash.key? iso_country
 
