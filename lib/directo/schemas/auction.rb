@@ -9,6 +9,8 @@ module DirectoApi
         'language': 'language',
         'vat_amount': 'vat_amount',
         'total_wo_vat': 'total_wo_vat',
+        'destination': 'alpha_two_country_code',
+        'vat_reg_no': 'vat_reg_no'
       }
     end
 
@@ -19,7 +21,6 @@ module DirectoApi
         'quantity': 'quantity',
         'price': 'price',
         'unit': 'unit',
-        'vat_number': 'vat_number',
       }
     end
   end

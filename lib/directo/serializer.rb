@@ -36,6 +36,8 @@ module DirectoApi
         PaymentTerm: invoice.payment_terms,
         CustomerCode: invoice.customer_code,
         CustomerName: invoice.customer_name,
+        Destination: invoice.customer_destination,
+        VATregNo: invoice.customer_vat_reg_no,
         Language: invoice.language, Currency: invoice.currency,
         SalesAgent: invoice.sales_agent,
         TotalVAT: invoice.vat_amount,

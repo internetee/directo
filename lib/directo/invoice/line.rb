@@ -10,7 +10,7 @@ module DirectoApi
       attr_accessor :start_date
       attr_accessor :end_date
 
-      attr_accessor :vat_number # VATCode, percentage
+      attr_accessor :vat_number # VATCode, directo internal code
       attr_accessor :quantity # Quantity
       attr_accessor :unit # Unit
       attr_accessor :price # UnitPriceWoVAT
