@@ -7,9 +7,7 @@ module DirectoApi
         'number': 'number',
         'currency': 'currency', 'language': 'language',
         'vat_amount': 'vat_amount',
-        'total_wo_vat': 'total_wo_vat',
-        'alpha_two_country_code': 'alpha_two_country_code',
-        'vat_reg_no': 'vat_reg_no'
+        'total_wo_vat': 'total_wo_vat'
       }
     end
 
