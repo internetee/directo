@@ -15,6 +15,8 @@ module DirectoApi
     attr_accessor :sales_agent
     def_delegator :@customer, :code, :customer_code
     def_delegator :@customer, :name, :customer_name
+    def_delegator :@customer, :destination, :customer_destination
+    def_delegator :@customer, :vat_reg_no, :customer_vat_reg_no
     def_delegator :@lines, :each
 
     def initialize(_lines = nil, sales_agent = nil, payment_terms = nil)
@@ -34,6 +36,14 @@ module DirectoApi
       create_lines_from_schema(invoice_lines, line_map: schema.line_schema)
     end
 
+    def country_vat_code(iso_country)
+      vat_codes = File.read(File.join(File.dirname(__FILE__), 'data/vat.json'))
+      hash = JSON.parse(vat_codes)
+      return 0 unless hash.key? iso_country
+
+      hash[iso_country]['directo_code']
+    end
+
     private
 
     def schema_to_invoice(schema:, invoice:)
@@ -47,7 +57,9 @@ module DirectoApi
     def attach_invoice_customer(invoice)
       if invoice['customer'].class == Hash
         Customer.new(name: invoice['customer']['name'],
-                     code: invoice['customer']['code'])
+                     code: invoice['customer']['code'],
+                     destination: invoice['customer']['destination'],
+                     vat_reg_no: invoice['customer']['vat_reg_no'])
       else
         Customer.new(code: customer, name: nil)
       end
@@ -61,6 +73,7 @@ module DirectoApi
 
           line.send((key.to_s + '='), invoice_line[line_map[key]])
         end
+
         create_line_entry(line)
       end
     end
@@ -70,6 +83,8 @@ module DirectoApi
         parent = @lines.each.find_all { |l| l.description == line.description }.first
         line.parent = parent if parent
       end
+
+      line.vat_number = country_vat_code(@customer.destination) if @customer.destination
       @lines.add(line)
     end
 

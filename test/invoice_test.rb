@@ -34,6 +34,24 @@ module DirectoApi
       end
     end
 
+    def test_delegates_destination_to_customer
+      customer = Customer.new
+      @invoice.customer = customer
+
+      customer.stub(:destination, 'EE', ) do
+        assert_equal 'EE', @invoice.customer_destination
+      end
+    end
+
+    def test_delegates_vat_no_to_customer
+      customer = Customer.new
+      @invoice.customer = customer
+
+      customer.stub(:vat_reg_no, 123) do
+        assert_equal 123, @invoice.customer_vat_reg_no
+      end
+    end
+
     def test_currency
       @invoice.currency = Money::Currency.new('EUR')
       assert_equal Money::Currency.new('EUR'), @invoice.currency
