@@ -26,6 +26,10 @@ module DirectoApi
       yield self if block_given?
     end
 
+    def self.vat_codes
+      @vat_codes ||= JSON.parse(File.read(File.join(File.dirname(__FILE__), 'data/vat.json')))
+    end
+
     def load_from_schema(invoice:, schema:)
       schema = Object.const_get('DirectoApi::' + schema.capitalize)
 
@@ -37,8 +41,7 @@ module DirectoApi
     end
 
     def country_vat_code(iso_country)
-      vat_codes = File.read(File.join(File.dirname(__FILE__), 'data/vat.json'))
-      hash = JSON.parse(vat_codes)
+      hash = self.class.vat_codes
       return 0 unless hash.key? iso_country
 
       hash[iso_country]['directo_code']
@@ -84,7 +87,7 @@ module DirectoApi
         line.parent = parent if parent
       end
 
-      line.vat_number = country_vat_code(@customer.destination) if @customer.destination
+      line.vat_number = @customer.send_vat_code? ? country_vat_code(@customer.destination) : 0
       @lines.add(line)
     end
 
