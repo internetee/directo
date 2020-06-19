@@ -19,7 +19,7 @@ module DirectoApi
       expected_xml = <<-XML
         <invoices>
           <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="bestnames" Language="ENG" Currency="EUR" SalesAgent="John Doe">
-            <line RN="1" RR="1" ProductID="COM01" Quantity="1" Unit="pc" ProductName=".ee registreerimine - 1 aasta(t)" UnitPriceWoVAT="5.00"/>
+            <line RN="1" RR="1" ProductID="COM01" Quantity="1" Unit="pc" ProductName=".ee registreerimine - 1 aasta(t)" UnitPriceWoVAT="5.00" VATCode="0"/>
           </invoice>
         </invoices>
       XML
@@ -43,7 +43,7 @@ module DirectoApi
       expected_xml = <<-XML
         <invoices>
           <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="bestnames" Language="ENG" Currency="EUR" SalesAgent="John Doe" TransactionDate="2010-08-06">
-            <line RN="1" RR="1" ProductID="ETTEM06" Quantity="-1" ProductName="Domains prepayment" UnitPriceWoVAT="5.00"/>
+            <line RN="1" RR="1" ProductID="ETTEM06" Quantity="-1" ProductName="Domains prepayment" UnitPriceWoVAT="5.00" VATCode="0"/>
           </invoice>
         </invoices>
       XML
@@ -67,7 +67,7 @@ module DirectoApi
       expected_xml = <<-XML
         <invoices>
           <invoice Number="1" InvoiceDate="2010-07-05" PaymentTerm="net10" CustomerCode="bestnames"  CustomerName="Best Names" Language="ENG" Currency="EUR" SalesAgent="John Doe" TransactionDate="2010-08-06">
-            <line RN="1" RR="1" ProductID="OKSJON" Quantity="1" ProductName="auction for .ee" UnitPriceWoVAT="5.00"/>
+            <line RN="1" RR="1" ProductID="OKSJON" Quantity="1" ProductName="auction for .ee" UnitPriceWoVAT="5.00" VATCode="0"/>
           </invoice>
         </invoices>
       XML

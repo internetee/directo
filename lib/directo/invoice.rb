@@ -87,8 +87,12 @@ module DirectoApi
         line.parent = parent if parent
       end
 
-      line.vat_number = @customer.send_vat_code? ? country_vat_code(@customer.destination) : 0
+      line.vat_number = calculate_vat_number
       @lines.add(line)
+    end
+
+    def calculate_vat_number
+      @customer.send_vat_code? ? country_vat_code(@customer.destination) : 0
     end
 
     def remove_line_duplicates(invoice_lines, lines: [])
