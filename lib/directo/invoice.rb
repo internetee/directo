@@ -36,8 +36,13 @@ module DirectoApi
       schema_to_invoice(schema: schema, invoice: invoice)
       @customer = attach_invoice_customer(invoice)
 
+      logger.info 'Generating invoice lines from the following invoice:\n\r'
+      logger.info invoice
       invoice_lines = remove_line_duplicates(invoice['invoice_lines'])
-      create_lines_from_schema(invoice_lines, line_map: schema.line_schema)
+      lines = create_lines_from_schema(invoice_lines, line_map: schema.line_schema)
+      logger.info 'Got new lines:\n\r'
+      logger.info lines
+      lines
     end
 
     def country_vat_code(iso_country)
@@ -109,6 +114,10 @@ module DirectoApi
       end
 
       lines
+    end
+
+    def logger
+      @logger ||= Logger.new(Rails.root.join('log', 'directo_internal_invoice.log'))
     end
   end
 end
