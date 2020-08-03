@@ -22,16 +22,16 @@ module DirectoApi
   Money.locale_backend = nil
 
   def self.logger
-    @@logger ||= if defined?(Rails.logger)
-                   Rails.logger
-                 elsif defined?(Rails.root)
-                   ::Logger.new(Rails.root.join('log', 'directo_internal_invoice.log'))
-                 else
-                   ::Logger.new(STDOUT)
-                 end
+    @logger ||= if defined?(Rails.logger)
+                  Rails.logger
+                elsif defined?(Rails.root)
+                  ::Logger.new(Rails.root.join('log', 'directo_internal_invoice.log'))
+                else
+                  ::Logger.new(STDOUT)
+                end
   end
 
   def self.logger=(logger)
-    @@logger = logger
+    @logger = logger
   end
 end

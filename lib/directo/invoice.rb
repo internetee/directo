@@ -30,6 +30,7 @@ module DirectoApi
       @vat_codes ||= JSON.parse(File.read(File.join(File.dirname(__FILE__), 'data/vat.json')))
     end
 
+    # rubocop:disable Metrics/AbcSize
     def load_from_schema(invoice:, schema:)
       schema = Object.const_get('DirectoApi::' + schema.capitalize)
 
@@ -44,6 +45,7 @@ module DirectoApi
       logger.info lines
       lines
     end
+    # rubocop:enable Metrics/AbcSize
 
     def country_vat_code(iso_country)
       hash = self.class.vat_codes
