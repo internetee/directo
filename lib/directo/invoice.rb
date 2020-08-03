@@ -36,8 +36,13 @@ module DirectoApi
       schema_to_invoice(schema: schema, invoice: invoice)
       @customer = attach_invoice_customer(invoice)
 
+      logger.info 'Generating invoice lines from the following invoice:\n\r'
+      logger.info invoice
       invoice_lines = remove_line_duplicates(invoice['invoice_lines'])
-      create_lines_from_schema(invoice_lines, line_map: schema.line_schema)
+      lines = create_lines_from_schema(invoice_lines, line_map: schema.line_schema)
+      logger.info 'Got new lines:'
+      logger.info lines
+      lines
     end
 
     def country_vat_code(iso_country)
@@ -88,6 +93,7 @@ module DirectoApi
       end
 
       line.vat_number = calculate_vat_number
+      logger.info "Calculated VAT number for line: #{line.vat_number}"
       @lines.add(line)
     end
 
@@ -109,6 +115,10 @@ module DirectoApi
       end
 
       lines
+    end
+
+    def logger
+      DirectoApi.logger
     end
   end
 end
