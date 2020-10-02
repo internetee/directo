@@ -21,7 +21,7 @@ module DirectoApi
     def_delegator :@lines, :each
 
     DEFAULT_REVERSE_CHARGE_VAT_CODE = 4
-    ZERO_VAT_CODE = 0
+    ZERO_VAT_CODE = 6
 
     def initialize(_lines = nil, sales_agent = nil, payment_terms = nil)
       @sales_agent = sales_agent
