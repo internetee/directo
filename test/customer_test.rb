@@ -36,6 +36,7 @@ module DirectoApi
       @customer.destination = 'CZ'
       @customer.vat_reg_no = '11111'
       refute @customer.send_vat_code?
+      assert @customer.reverse_charge?
     end
 
     def test_show_vat_for_estonian

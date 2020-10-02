@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 module DirectoApi
   class Invoice
     extend Forwardable
@@ -18,6 +19,9 @@ module DirectoApi
     def_delegator :@customer, :destination, :customer_destination
     def_delegator :@customer, :vat_reg_no, :customer_vat_reg_no
     def_delegator :@lines, :each
+
+    DEFAULT_REVERSE_CHARGE_VAT_CODE = 4
+    ZERO_VAT_CODE = 0
 
     def initialize(_lines = nil, sales_agent = nil, payment_terms = nil)
       @sales_agent = sales_agent
@@ -100,7 +104,13 @@ module DirectoApi
     end
 
     def calculate_vat_number
-      @customer.send_vat_code? ? country_vat_code(@customer.destination) : 0
+      if @customer.send_vat_code?
+        country_vat_code(@customer.destination)
+      elsif @customer.reverse_charge?
+        DEFAULT_REVERSE_CHARGE_VAT_CODE
+      else
+        ZERO_VAT_CODE
+      end
     end
 
     def remove_line_duplicates(invoice_lines, lines: [])
@@ -124,3 +134,4 @@ module DirectoApi
     end
   end
 end
+# rubocop:enable Metrics/ClassLength
