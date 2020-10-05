@@ -16,10 +16,14 @@ module DirectoApi
       log_customer_data
 
       return true if estonian?
-      return false if eu_based? && vat_reg_no_not_empty
+      return false if reverse_charge?
       return false unless eu_based?
 
       true
+    end
+
+    def reverse_charge?
+      eu_based? && vat_reg_no_not_empty
     end
 
     def vat_reg_no_not_empty
@@ -43,6 +47,7 @@ module DirectoApi
       logger.info "Trying to decide on VAT code for customer #{@name}, code: #{@code}"\
                            "destination: #{@destination}, vat_reg_no: #{@vat_reg_no}"
       logger.info "estonian: #{estonian?}, eu_based: #{eu_based?}"
+      logger.info "reverse_charge: #{reverse_charge?}"
       logger.info "vat_reg_no_not_empty: #{vat_reg_no_not_empty}"
     end
   end
