@@ -1,19 +1,11 @@
-# rubocop:disable Metrics/ClassLength
 module DirectoApi
   class Invoice
     extend Forwardable
 
-    attr_accessor :customer
-    attr_accessor :number
-    attr_accessor :date
-    attr_accessor :transaction_date
-    attr_accessor :currency
-    attr_accessor :language
-    attr_accessor :total_wo_vat
-    attr_accessor :vat_amount
-    attr_accessor :lines
-    attr_accessor :payment_terms
-    attr_accessor :sales_agent
+    attr_accessor :customer, :number, :date, :transaction_date, :currency,
+                  :language, :total_wo_vat, :vat_amount, :lines, :payment_terms,
+                  :sales_agent
+
     def_delegator :@customer, :code, :customer_code
     def_delegator :@customer, :name, :customer_name
     def_delegator :@customer, :destination, :customer_destination
@@ -34,9 +26,8 @@ module DirectoApi
       @vat_codes ||= JSON.parse(File.read(File.join(File.dirname(__FILE__), 'data/vat.json')))
     end
 
-    # rubocop:disable Metrics/AbcSize
     def load_from_schema(invoice:, schema:)
-      schema = Object.const_get('DirectoApi::' + schema.capitalize)
+      schema = Object.const_get("DirectoApi::#{schema.capitalize}")
 
       schema_to_invoice(schema: schema, invoice: invoice)
       @customer = attach_invoice_customer(invoice)
@@ -49,7 +40,6 @@ module DirectoApi
       logger.info lines
       lines
     end
-    # rubocop:enable Metrics/AbcSize
 
     def country_vat_code(iso_country)
       hash = self.class.vat_codes
@@ -61,31 +51,31 @@ module DirectoApi
     private
 
     def schema_to_invoice(schema:, invoice:)
-      schema.meta_schema.keys.each do |key|
+      schema.meta_schema.each_key do |key|
         next unless invoice.key? schema.meta_schema[key]
 
-        send((key.to_s + '='), invoice[schema.meta_schema[key]])
+        send("#{key}=", invoice[schema.meta_schema[key]])
       end
     end
 
     def attach_invoice_customer(invoice)
-      if invoice['customer'].class == Hash
+      if invoice['customer'].instance_of?(Hash)
         Customer.new(name: invoice['customer']['name'],
                      code: invoice['customer']['code'],
                      destination: invoice['customer']['destination'],
                      vat_reg_no: invoice['customer']['vat_reg_no'])
       else
-        Customer.new(code: customer, name: nil)
+        Customer.new(code: invoice['customer_code'], name: nil)
       end
     end
 
     def create_lines_from_schema(invoice_lines, line_map:)
       invoice_lines.each do |invoice_line|
         line = @lines.new
-        line_map.keys.each do |key|
+        line_map.each_key do |key|
           next unless invoice_line.key? line_map[key]
 
-          line.send((key.to_s + '='), invoice_line[line_map[key]])
+          line.send("#{key}=", invoice_line[line_map[key]])
         end
 
         create_line_entry(line)
@@ -117,12 +107,9 @@ module DirectoApi
       line_map = Hash.new 0
       invoice_lines.each { |l| line_map[l] += 1 }
 
-      line_map.keys.each do |count|
+      line_map.each_key do |count|
         count['quantity'] = line_map[count] unless count['unit'].nil?
-        if count['description'].match?(/Domeenide ettemaks|Domains prepayment/)
-          count['quantity'] = -1
-        end
-
+        count['quantity'] = -1 if count['description'].match?(/ettemaks|prepayment/)
         lines << count
       end
 
@@ -134,4 +121,4 @@ module DirectoApi
     end
   end
 end
-# rubocop:enable Metrics/ClassLength
+
