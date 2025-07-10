@@ -32,8 +32,8 @@
   "EE":{
      "country":"Estonia",
      "alpha_two_country_code":"EE",
-     "directo_code":50,
-     "vat_percentage":22
+     "directo_code":54,
+     "vat_percentage":24
   },
   "DE":{
      "country":"Germany",
