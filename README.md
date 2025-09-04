@@ -1,8 +1,9 @@
 # Directo
 
 [![Build Status](https://travis-ci.org/internetee/directo.svg?branch=master)](https://travis-ci.org/internetee/directo)
-[![Maintainability](https://api.codeclimate.com/v1/badges/c0bcfcf7087381250763/maintainability)](https://codeclimate.com/github/internetee/directo/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/c0bcfcf7087381250763/test_coverage)](https://codeclimate.com/github/internetee/directo/test_coverage)
+[![Maintainability](https://qlty.sh/gh/internetee/projects/directo/maintainability.svg)](https://qlty.sh/gh/internetee/projects/directo)
+[![Code Coverage](https://qlty.sh/gh/internetee/projects/directo/coverage.svg)](https://qlty.sh/gh/internetee/projects/directo)
+
 
 # Usage
 Start by initializing Directo client by
