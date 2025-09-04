@@ -1,6 +1,7 @@
 # Directo
 
 [![Build Status](https://travis-ci.org/internetee/directo.svg?branch=master)](https://travis-ci.org/internetee/directo)
+
 [![Maintainability](https://qlty.sh/gh/internetee/projects/directo/maintainability.svg)](https://qlty.sh/gh/internetee/projects/directo)
 [![Code Coverage](https://qlty.sh/gh/internetee/projects/directo/coverage.svg)](https://qlty.sh/gh/internetee/projects/directo)
 
