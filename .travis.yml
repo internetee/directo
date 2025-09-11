@@ -6,8 +6,9 @@ rvm:
 cache: bundler
 before_install: gem install bundler -v 2.0.2
 before_script:
-  - "curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter"
-  - "chmod +x ./cc-test-reporter"
-  - "./cc-test-reporter before-build"
+  - "curl https://qlty.sh | sh"
+  - "gem install simplecov simplecov-lcov"
+script:
+  - "COVERAGE=true bundle exec rake test"
 after_script:
-  - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+  - "qlty coverage publish coverage/lcov.info --repo internetee/directo"
